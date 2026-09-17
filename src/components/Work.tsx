@@ -70,7 +70,17 @@ export default function Work() {
                 className="glass rounded-3xl overflow-hidden card-hover group"
               >
                 <div className="relative h-52 overflow-hidden">
-                  <img src={p.image_url} alt={p.title} loading="lazy" className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  <img
+                    src={p.image_url || '/project-fallback.png'}
+                    alt={p.title}
+                    loading="lazy"
+                    onError={(e) => {
+                      const img = e.currentTarget;
+                      if (img.src.endsWith('/project-fallback.png')) return;
+                      img.src = '/project-fallback.png';
+                    }}
+                    className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#04050c] via-transparent to-transparent" />
                   <span className="absolute top-3 left-3 glass-strong rounded-full px-3 py-1 text-[11px] font-bold tracking-wider uppercase text-neon">
                     {p.category}
